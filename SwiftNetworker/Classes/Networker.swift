@@ -16,8 +16,8 @@ class Networker {
     }
     
     private static func handleAlamofireJSONResponse(dataResponse: DataResponse<Any>,
-                                                onSuccess: (_ json: JSON, _ statusCode: Int) -> (),
-                                                onError: (Error) -> ()) {
+                                                    onSuccess: (_ json: JSON, _ statusCode: Int) -> (),
+                                                    onError: (Error) -> ()) {
         let result = dataResponse.result
         if let error = result.error {
             onError(error)
@@ -47,5 +47,53 @@ class Networker {
     
     private static func callNoReponseError(onError: (Error) -> ()) {
         onError(NetworkerError(message: "No response".localized))
+    }
+    
+    private static func requestJSONMultipard(url: String,
+                                             method: HTTPMethod,
+                                             params: Parameters,
+                                             headers: [String: String]? = nil,
+                                             onSuccess: @escaping (_ json: JSON, _ statusCode: Int) -> (),
+                                             onError: @escaping (Error) -> ()) {
+        let urlRequest = try! URLRequest(url: url,
+                                         method: method,
+                                         headers: headers)
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                
+                func anyToData(value: Any) -> Data {
+                    return String(describing: value).data(using: String.Encoding.utf8)!
+                }
+                
+                for (key, value) in params {
+                    if let networkerFile = value as? NetworkerFile {
+                        multipartFormData.append(networkerFile.data,
+                                                 withName: networkerFile.key,
+                                                 fileName: networkerFile.fileName,
+                                                 mimeType: networkerFile.fileName)
+                    } else if let array = value as? [Any] {
+                        for element in array {
+                            multipartFormData.append(anyToData(value: element), withName: key)
+                        }
+                    } else {
+                        multipartFormData.append(anyToData(value: value), withName: key)
+                    }
+                }
+        },
+            with: urlRequest,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        handleAlamofireJSONResponse(dataResponse: response,
+                                                    onSuccess: { (dictionary, statusCode) in
+                                                        onSuccess(dictionary, statusCode)
+                                                    },
+                                                    onError: onError)
+                    }
+                case .failure(let encodingError):
+                    onError(NetworkerError(message: encodingError.localizedDescription))
+                }
+        })
     }
 }
