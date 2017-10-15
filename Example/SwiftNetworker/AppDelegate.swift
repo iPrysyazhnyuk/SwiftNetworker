@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  SwiftNetworker
 //
-//  Created by prysyazhnyuk@steelkiwi.com on 10/15/2017.
-//  Copyright (c) 2017 prysyazhnyuk@steelkiwi.com. All rights reserved.
+//  Created by Igor Prysyazhnyuk on 10/15/2017.
+//  Copyright (c) 2017 Igor Prysyazhnyuk. All rights reserved.
 //
 
 import UIKit
