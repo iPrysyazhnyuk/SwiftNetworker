@@ -9,6 +9,6 @@
 import ObjectMapper
 
 public enum NetworkerMappableResult<T: Mappable> {
-    case success(NetworkerResponse<T>)
+    case success(NetworkerMappableResponse<T>)
     case failure(Error)
 }

@@ -151,7 +151,7 @@ class Networker {
                                     headers: [String: String]? = nil,
                                     callback: @escaping (NetworkerJSONResult) -> ()) -> NetworkerRequest? {
         return requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { (json, statusCode) in
-            callback(NetworkerJSONResult.success(json))
+            callback(NetworkerJSONResult.success(NetworkerJSONResponse(statusCode: statusCode, json: json)))
         }) { (error) in
             callback(NetworkerJSONResult.failure(error))
         }
@@ -180,7 +180,7 @@ class Networker {
                 let object = T(JSON: json)
                 DispatchQueue.main.async {
                     if let object = object {
-                        let networkerResponse = NetworkerResponse(statusCode: statusCode, object: object)
+                        let networkerResponse = NetworkerMappableResponse(statusCode: statusCode, object: object)
                         callback(NetworkerMappableResult.success(networkerResponse))
                     }
                     else {
