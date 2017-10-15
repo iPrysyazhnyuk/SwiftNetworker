@@ -6,9 +6,9 @@
 //
 //
 
-typealias JSON = [String: Any]
+public typealias JSON = [String: Any]
 
-enum NetworkerJSONResult {
+public enum NetworkerJSONResult {
     case success(JSON)
     case failure(Error)
 }

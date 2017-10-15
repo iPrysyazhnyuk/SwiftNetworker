@@ -141,8 +141,8 @@ class Networker {
     ///   - params: Parameters
     ///   - encoding: Parameters encoding, if not specified use URLEncoding
     ///   - headers: HTTP headers
-    ///   - completion: Closure with JSON result
-    private static func requestJSON(url: String,
+    ///   - callback: Closure with JSON result
+    public static func requestJSON(url: String,
                                     method: HTTPMethod,
                                     params: Parameters? = nil,
                                     encoding: ParameterEncoding? = nil,
@@ -163,8 +163,8 @@ class Networker {
     ///   - params: Parameters
     ///   - encoding: Parameters encoding, if not specified use URLEncoding
     ///   - headers: HTTP headers
-    ///   - completion: Closure with Mappable result
-    private static func requestMappable<T: Mappable>(url: String,
+    ///   - callback: Closure with Mappable result
+    public static func requestMappable<T: Mappable>(url: String,
                                         method: HTTPMethod,
                                         params: Parameters? = nil,
                                         encoding: ParameterEncoding? = nil,

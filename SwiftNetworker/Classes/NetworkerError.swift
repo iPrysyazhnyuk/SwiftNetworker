@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-struct NetworkerError: Error, LocalizedError {
+public struct NetworkerError: Error, LocalizedError {
     let value: [String: Any]?
     let message: String?
     let statusCode: Int?
@@ -21,7 +21,7 @@ struct NetworkerError: Error, LocalizedError {
         self.statusCode = statusCode
     }
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         return message
     }
 }

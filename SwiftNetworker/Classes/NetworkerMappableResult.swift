@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-enum NetworkerMappableResult<T: Mappable> {
+public enum NetworkerMappableResult<T: Mappable> {
     case success(NetworkerResponse<T>)
     case failure(Error)
 }
