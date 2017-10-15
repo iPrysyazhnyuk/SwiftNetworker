@@ -6,8 +6,6 @@
 //
 //
 
-import ObjectMapper
-
 typealias JSON = [String: Any]
 
 enum NetworkerJSONResult {
