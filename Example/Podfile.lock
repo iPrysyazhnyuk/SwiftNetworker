@@ -1,0 +1,22 @@
+PODS:
+  - Nimble (7.0.2)
+  - Quick (1.2.0)
+  - SwiftNetworker (0.1.0)
+
+DEPENDENCIES:
+  - Nimble (~> 7.0.2)
+  - Quick (~> 1.2.0)
+  - SwiftNetworker (from `../`)
+
+EXTERNAL SOURCES:
+  SwiftNetworker:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  SwiftNetworker: c1cfe1578b9c0c41d392802a43eaae8902b44010
+
+PODFILE CHECKSUM: 4d40a1be0f9a7081c3e3edfc1541aaaa35aae6ea
+
+COCOAPODS: 1.2.1
