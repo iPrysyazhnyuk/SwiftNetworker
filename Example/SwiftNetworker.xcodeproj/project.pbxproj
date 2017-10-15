@@ -31,7 +31,7 @@
 		2F21EB26DA718A40BDDE048E /* Pods-SwiftNetworker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftNetworker_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftNetworker_Tests/Pods-SwiftNetworker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		324FF633A5A7AC55CE7032EA /* Pods-SwiftNetworker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftNetworker_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftNetworker_Tests/Pods-SwiftNetworker_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		3F83CC6E6803AF835EF373F3 /* Pods_SwiftNetworker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftNetworker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A70CD0EDC4168802877EC92 /* SwiftNetworker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = SwiftNetworker.podspec; path = ../SwiftNetworker.podspec; sourceTree = "<group>"; };
+		5A70CD0EDC4168802877EC92 /* SwiftNetworker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftNetworker.podspec; path = ../SwiftNetworker.podspec; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* SwiftNetworker_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftNetworker_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,10 +43,10 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		73D1A6BF638438AFF936FD04 /* Pods-SwiftNetworker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftNetworker_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftNetworker_Example/Pods-SwiftNetworker_Example.release.xcconfig"; sourceTree = "<group>"; };
-		B91F10A17A52E198715EF7AC /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		B91F10A17A52E198715EF7AC /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C89F3BBED263180417B24102 /* Pods_SwiftNetworker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftNetworker_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D11A08F471BD67BA7FD34129 /* Pods-SwiftNetworker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftNetworker_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftNetworker_Example/Pods-SwiftNetworker_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		F94CB65439D49619D5967A25 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		F94CB65439D49619D5967A25 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,6 +454,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -499,6 +500,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -514,7 +516,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -529,7 +531,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -550,7 +552,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -567,7 +569,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
