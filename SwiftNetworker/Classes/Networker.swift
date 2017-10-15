@@ -11,9 +11,8 @@ import ObjectMapper
 
 class Networker {
     
-    enum JSONKey: String {
-        case array
-        case string
+    public struct JSONKey {
+        static let array = "array"
     }
     
     private static func handleAlamofireJSONResponse(dataResponse: DataResponse<Any>,
@@ -35,10 +34,7 @@ class Networker {
             responseValue = objectValue
         } else if let arrayValue = result.value as? [Any] {
             // If we got array made dictionary from it for object mapper
-            responseValue = [JSONKey.array.rawValue: arrayValue as Any]
-        } else if let string = result.value as? String {
-            // If we got string made dictionary from it for object mapper
-            responseValue = [JSONKey.string.rawValue: string as Any]
+            responseValue = [JSONKey.array: arrayValue as Any]
         }
         
         let statusCode = response.statusCode
@@ -176,7 +172,7 @@ class Networker {
                 let object = T(JSON: json)
                 DispatchQueue.main.async {
                     if let object = object {
-                        let networkerResponse = NetworkerResponse(statusCode: statusCode, value: json, object: object)
+                        let networkerResponse = NetworkerResponse(statusCode: statusCode, object: object)
                         callback(NetworkerMappableResult.success(networkerResponse))
                     }
                     else {

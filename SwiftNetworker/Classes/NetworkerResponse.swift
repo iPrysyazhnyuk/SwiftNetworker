@@ -9,15 +9,12 @@
 import ObjectMapper
 
 public struct NetworkerResponse<T: Mappable> {
-    let statusCode: Int
-    let value: [String: Any]
-    let object: T
+    public let statusCode: Int
+    public let object: T
     
     init(statusCode: Int,
-         value: [String: Any],
          object: T) {
         self.statusCode = statusCode
-        self.value = value
         self.object = object
     }
 }
