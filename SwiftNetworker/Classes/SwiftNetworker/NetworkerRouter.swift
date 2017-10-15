@@ -29,8 +29,10 @@ public extension NetworkerRouter {
     ///
     /// - Parameters:
     ///   - callback: Closure with JSON result
-    public func requestJSON(callback: @escaping (NetworkerJSONResult) -> ()) {
-        Networker.requestJSON(url: url,
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
+    public func requestJSON(callback: @escaping (NetworkerJSONResult) -> ()) -> NetworkerRequest? {
+        return Networker.requestJSON(url: url,
                               method: method,
                               params: params,
                               encoding: encoding,
@@ -42,8 +44,10 @@ public extension NetworkerRouter {
     ///
     /// - Parameters:
     ///   - callback: Closure with Mappable result
-    public func requestMappable<T: Mappable>(callback: @escaping (NetworkerMappableResult<T>) -> ()) {
-        Networker.requestMappable(url: url,
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
+    public func requestMappable<T: Mappable>(callback: @escaping (NetworkerMappableResult<T>) -> ()) -> NetworkerRequest? {
+        return Networker.requestMappable(url: url,
                                   method: method,
                                   params: params,
                                   encoding: encoding,
