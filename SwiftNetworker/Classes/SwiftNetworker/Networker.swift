@@ -29,17 +29,17 @@ class Networker {
             return
         }
         
-        var responseValue: JSON = [:]
-        if let objectValue = result.value as? JSON {
-            responseValue = objectValue
-        } else if let arrayValue = result.value as? [Any] {
+        var responseJSON: JSON = [:]
+        if let object = result.value as? JSON {
+            responseJSON = object
+        } else if let array = result.value as? [Any] {
             // If we got array made dictionary from it for object mapper
-            responseValue = [JSONKey.array: arrayValue as Any]
+            responseJSON = [JSONKey.array: array as Any]
         }
         
         let statusCode = response.statusCode
-        if statusCode < 300 { onSuccess(responseValue, statusCode) }
-        else { onError(NetworkerError(value: responseValue, statusCode: statusCode)) }
+        if statusCode < 300 { onSuccess(responseJSON, statusCode) }
+        else { onError(NetworkerError(info: responseJSON, statusCode: statusCode)) }
     }
     
     private static func requestJSONMultipart(url: String,

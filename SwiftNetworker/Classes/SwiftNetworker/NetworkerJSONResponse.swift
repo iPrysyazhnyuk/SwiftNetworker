@@ -7,7 +7,11 @@
 //
 
 public struct NetworkerJSONResponse {
+    
+    /// HTTP status code
     public let statusCode: Int
+    
+    /// JSON dictionary
     public let json: JSON
     
     init(statusCode: Int,
