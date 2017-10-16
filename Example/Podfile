@@ -1,7 +1,7 @@
 use_frameworks!
 
 target 'SwiftNetworker_Example' do
-  pod 'SwiftNetworker', :path => '../'
+  pod 'SwiftNetworker/RxSwift', :path => '../'
 
   target 'SwiftNetworker_Tests' do
     inherit! :search_paths
