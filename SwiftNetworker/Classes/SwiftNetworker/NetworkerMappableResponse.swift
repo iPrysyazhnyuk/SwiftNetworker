@@ -8,8 +8,12 @@
 
 import ObjectMapper
 
-public struct NetworkerResponse<T: Mappable> {
+public struct NetworkerMappableResponse<T: Mappable> {
+    
+    /// HTTP status code
     public let statusCode: Int
+    
+    /// Parsed Mappable object
     public let object: T
     
     init(statusCode: Int,

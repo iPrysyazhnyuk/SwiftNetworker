@@ -29,17 +29,17 @@ class Networker {
             return
         }
         
-        var responseValue: JSON = [:]
-        if let objectValue = result.value as? JSON {
-            responseValue = objectValue
-        } else if let arrayValue = result.value as? [Any] {
+        var responseJSON: JSON = [:]
+        if let object = result.value as? JSON {
+            responseJSON = object
+        } else if let array = result.value as? [Any] {
             // If we got array made dictionary from it for object mapper
-            responseValue = [JSONKey.array: arrayValue as Any]
+            responseJSON = [JSONKey.array: array as Any]
         }
         
         let statusCode = response.statusCode
-        if statusCode < 300 { onSuccess(responseValue, statusCode) }
-        else { onError(NetworkerError(value: responseValue, statusCode: statusCode)) }
+        if statusCode < 300 { onSuccess(responseJSON, statusCode) }
+        else { onError(NetworkerError(info: responseJSON, statusCode: statusCode)) }
     }
     
     private static func requestJSONMultipart(url: String,
@@ -90,7 +90,7 @@ class Networker {
         })
     }
     
-    /// Check parameters and make request (can be multipart) with JSON Dictionary response
+    /// Check parameters and make request with JSON Dictionary response. Can be multipart if parameters contain NetworkerFile
     ///
     /// - Parameters:
     ///   - url: Full url
@@ -100,13 +100,16 @@ class Networker {
     ///   - headers: HTTP headers
     ///   - onSuccess: Closure for success response
     ///   - onError: Closure for error response
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
     private static func requestJSON(url: String,
                                     method: HTTPMethod,
                                     params: Parameters? = nil,
                                     encoding: ParameterEncoding? = nil,
                                     headers: [String: String]? = nil,
                                     onSuccess: @escaping (_ json: JSON, _ statusCode: Int) -> (),
-                                    onError: @escaping (Error) -> ()) {
+                                    onError: @escaping (Error) -> ()) -> NetworkerRequest? {
+        var request: NetworkerRequest?
         // If parameters contain NetworkerFile make multipart request
         if let params = params,
             params.values.contains(where: { $0 is NetworkerFile }) {
@@ -117,16 +120,17 @@ class Networker {
                                  onSuccess: onSuccess,
                                  onError: onError)
         } else {
-            Alamofire.request(url,
-                              method: method,
-                              parameters: params,
-                              encoding: encoding ?? URLEncoding.default,
-                              headers: headers).responseJSON { (dataResponse) in
-                                handleAlamofireJSONResponse(dataResponse: dataResponse, onSuccess: { (dictionary, statusCode) in
-                                    onSuccess(dictionary, statusCode)
-                                }, onError: onError)
+            request = Alamofire.request(url,
+                                        method: method,
+                                        parameters: params,
+                                        encoding: encoding ?? URLEncoding.default,
+                                        headers: headers).responseJSON { (dataResponse) in
+                                            handleAlamofireJSONResponse(dataResponse: dataResponse, onSuccess: { (dictionary, statusCode) in
+                                                onSuccess(dictionary, statusCode)
+                                            }, onError: onError)
             }
         }
+        return request
     }
     
     /// Make request with JSON Dictionary response
@@ -138,14 +142,16 @@ class Networker {
     ///   - encoding: Parameters encoding, if not specified use URLEncoding
     ///   - headers: HTTP headers
     ///   - callback: Closure with JSON result
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
     public static func requestJSON(url: String,
                                     method: HTTPMethod,
                                     params: Parameters? = nil,
                                     encoding: ParameterEncoding? = nil,
                                     headers: [String: String]? = nil,
-                                    callback: @escaping (NetworkerJSONResult) -> ()) {
-        requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { (json, statusCode) in
-            callback(NetworkerJSONResult.success(json))
+                                    callback: @escaping (NetworkerJSONResult) -> ()) -> NetworkerRequest? {
+        return requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { (json, statusCode) in
+            callback(NetworkerJSONResult.success(NetworkerJSONResponse(statusCode: statusCode, json: json)))
         }) { (error) in
             callback(NetworkerJSONResult.failure(error))
         }
@@ -160,19 +166,21 @@ class Networker {
     ///   - encoding: Parameters encoding, if not specified use URLEncoding
     ///   - headers: HTTP headers
     ///   - callback: Closure with Mappable result
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
     public static func requestMappable<T: Mappable>(url: String,
                                         method: HTTPMethod,
                                         params: Parameters? = nil,
                                         encoding: ParameterEncoding? = nil,
                                         headers: [String: String]? = nil,
-                                        callback: @escaping (NetworkerMappableResult<T>) -> ()) {
-        requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { (json, statusCode) in
+                                        callback: @escaping (NetworkerMappableResult<T>) -> ()) -> NetworkerRequest? {
+        return requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { (json, statusCode) in
             // Run async because JSON parsing can be slow
             DispatchQueue.global().async {
                 let object = T(JSON: json)
                 DispatchQueue.main.async {
                     if let object = object {
-                        let networkerResponse = NetworkerResponse(statusCode: statusCode, object: object)
+                        let networkerResponse = NetworkerMappableResponse(statusCode: statusCode, object: object)
                         callback(NetworkerMappableResult.success(networkerResponse))
                     }
                     else {
@@ -184,4 +192,12 @@ class Networker {
             callback(NetworkerMappableResult.failure(error))
         }
     }
+}
+
+public protocol NetworkerRequest {
+    func cancel()
+}
+
+extension DataRequest: NetworkerRequest {
+    // Adapter to NetworkerRequest
 }

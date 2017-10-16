@@ -9,6 +9,6 @@
 public typealias JSON = [String: Any]
 
 public enum NetworkerJSONResult {
-    case success(JSON)
+    case success(NetworkerJSONResponse)
     case failure(Error)
 }

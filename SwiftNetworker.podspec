@@ -30,14 +30,25 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'SwiftNetworker/Classes/**/*'
-  
   # s.resource_bundles = {
   #   'SwiftNetworker' => ['SwiftNetworker/Assets/*.png']
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-    s.dependency 'Alamofire', '~> 4.4.0'
-    s.dependency 'ObjectMapper', '~> 2.2.7'
+
+    s.default_subspec = "Core"
+
+    s.subspec "Core" do |core|
+        core.source_files = 'SwiftNetworker/Classes/SwiftNetworker/**/*'
+        core.dependency 'Alamofire', '~> 4.4.0'
+        core.dependency 'ObjectMapper', '~> 2.2.7'
+    end
+
+    s.subspec "RxSwift" do |rx|
+        rx.source_files = 'SwiftNetworker/Classes/SwiftNetworkerRx/**/*'
+        rx.dependency "SwiftNetworker/Core"
+        rx.dependency 'RxSwift', '~> 3.0'
+    end
+
 end
