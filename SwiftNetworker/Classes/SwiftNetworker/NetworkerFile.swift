@@ -8,13 +8,14 @@
 
 import Foundation
 
-struct NetworkerFile {
+public struct NetworkerFile {
+    
     let data: Data
     let key: String
     let fileName: String
     let mimeType: String
     
-    enum ImageFormat {
+    public enum ImageFormat {
         case jpg(compressionQuality: Float)
         case png
         
@@ -35,7 +36,7 @@ struct NetworkerFile {
         }
     }
     
-    init(image: UIImage, key: String, name: String, imageFormat: ImageFormat) {
+    public init(image: UIImage, key: String, name: String, imageFormat: ImageFormat) {
         switch imageFormat {
         case .jpg(let compressionQuality):
             self.data = UIImageJPEGRepresentation(image, CGFloat(compressionQuality))!
