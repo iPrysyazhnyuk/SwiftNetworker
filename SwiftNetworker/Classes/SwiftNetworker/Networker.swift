@@ -168,7 +168,7 @@ class Networker {
     ///   - callback: Closure with Mappable result
     /// - Returns: NetworkerRequest you can use for example to cancel request
     @discardableResult
-    public static func requestMappable<T: Mappable>(url: String,
+    public static func requestMappable<T>(url: String,
                                         method: HTTPMethod,
                                         params: Parameters? = nil,
                                         encoding: ParameterEncoding? = nil,
