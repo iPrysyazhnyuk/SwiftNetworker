@@ -11,9 +11,7 @@ import ObjectMapper
 open class ArrayResponse<T: Mappable>: Mappable {
     public var array = [T]()
     
-    public required init(map: Map) {
-        mapping(map: map)
-    }
+    public required init(map: Map) {}
     
     open func mapping(map: Map) {
         array   <- map[Networker.JSONKey.array]

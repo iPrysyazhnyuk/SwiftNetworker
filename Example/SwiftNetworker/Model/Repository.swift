@@ -13,9 +13,7 @@ struct Repository: Mappable {
     var name = ""
     var owner: User?
     
-    init(map: Map) {
-        mapping(map: map)
-    }
+    init(map: Map) {}
     
     mutating func mapping(map: Map) {
         id          <- map["id"]

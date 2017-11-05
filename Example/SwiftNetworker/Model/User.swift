@@ -13,9 +13,7 @@ struct User: Mappable {
     var name = ""
     var avatarUrl = ""
     
-    init(map: Map) {
-        mapping(map: map)
-    }
+    init(map: Map) {}
     
     mutating func mapping(map: Map) {
         id          <- map["id"]
