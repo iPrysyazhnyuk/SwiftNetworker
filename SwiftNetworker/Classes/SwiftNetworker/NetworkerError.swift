@@ -10,6 +10,8 @@ import ObjectMapper
 
 public struct NetworkerError: Error, LocalizedError {
     
+    static let unknownError = "Unknown error".localized
+    
     /// Additional info in JSON format, can be response from server
     public let info: JSON?
     
@@ -19,7 +21,7 @@ public struct NetworkerError: Error, LocalizedError {
     let message: String?
     
     init(info: JSON? = nil,
-         message: String = "Unknown error".localized,
+         message: String = NetworkerError.unknownError,
          statusCode: Int? = nil) {
         self.info = info
         self.message = message
