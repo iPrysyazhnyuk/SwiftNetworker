@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-public class ArrayResponse<T: Mappable>: Mappable {
+open class ArrayResponse<T: Mappable>: Mappable {
     public var array = [T]()
     
     public required init(map: Map) {
