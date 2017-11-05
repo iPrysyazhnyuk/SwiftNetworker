@@ -12,8 +12,8 @@ import ObjectMapper
 public class Networker {
     
     public struct JSONKey {
-        static let array = "array"
-        static let string = "string"
+        public static let array = "array"
+        public static let string = "string"
     }
     
     private static func handleAlamofireJSONResponse(dataResponse: DefaultDataResponse,
