@@ -9,7 +9,7 @@
 import Alamofire
 import ObjectMapper
 
-class Networker {
+public class Networker {
     
     public struct JSONKey {
         static let array = "array"
