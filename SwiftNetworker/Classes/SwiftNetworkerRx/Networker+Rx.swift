@@ -44,7 +44,7 @@ extension Networker {
     ///   - encoding: Parameters encoding, if not specified use URLEncoding
     ///   - headers: HTTP headers
     /// - Returns: NetworkerMappableResult Observable
-    public static func requestMappableRx<T: Mappable>(url: String,
+    public static func requestMappableRx<T>(url: String,
                                        method: HTTPMethod,
                                        params: Parameters? = nil,
                                        encoding: ParameterEncoding? = nil,

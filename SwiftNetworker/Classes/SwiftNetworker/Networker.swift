@@ -13,33 +13,50 @@ class Networker {
     
     public struct JSONKey {
         static let array = "array"
+        static let string = "string"
     }
     
-    private static func handleAlamofireJSONResponse(dataResponse: DataResponse<Any>,
+    private static func handleAlamofireJSONResponse(dataResponse: DefaultDataResponse,
                                                     onSuccess: (_ json: JSON, _ statusCode: Int) -> (),
                                                     onError: (Error) -> ()) {
-        let result = dataResponse.result
-        if let error = result.error {
+        if let error = dataResponse.error {
             onError(error)
             return
         }
         
-        guard let response = dataResponse.response else {
-            onError(NetworkerError(message: "Missing response".localized))
-            return
+        guard let data = dataResponse.data,
+            let response = dataResponse.response else {
+                onError(NetworkerError(message: "Missing response".localized))
+                return
         }
         
         var responseJSON: JSON = [:]
-        if let object = result.value as? JSON {
-            responseJSON = object
-        } else if let array = result.value as? [Any] {
-            // If we got array made dictionary from it for object mapper
-            responseJSON = [JSONKey.array: array as Any]
+        var possibleErrorMessage = NetworkerError.unknownError
+        
+        if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+            if let object = json as? JSON {
+                responseJSON = object
+            } else if let array = json as? [Any] {
+                // If we got array made dictionary from it for object mapper
+                responseJSON = [JSONKey.array: array as Any]
+            }
+        } else {
+            let possibleEncoding: [String.Encoding] = [.utf8, .ascii]
+            for encoding in possibleEncoding {
+                if let string = String(data: data, encoding: encoding) {
+                    responseJSON = [JSONKey.string: string]
+                    possibleErrorMessage = string
+                    break
+                }
+            }
         }
         
         let statusCode = response.statusCode
         if statusCode < 300 { onSuccess(responseJSON, statusCode) }
-        else { onError(NetworkerError(info: responseJSON, statusCode: statusCode)) }
+        else { onError(NetworkerError(info: responseJSON,
+                                      message: possibleErrorMessage,
+                                      statusCode: statusCode))
+        }
     }
     
     private static func requestJSONMultipart(url: String,
@@ -77,7 +94,7 @@ class Networker {
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                 case .success(let upload, _, _):
-                    upload.responseJSON { response in
+                    upload.response { response in
                         handleAlamofireJSONResponse(dataResponse: response,
                                                     onSuccess: { (dictionary, statusCode) in
                                                         onSuccess(dictionary, statusCode)
@@ -124,7 +141,7 @@ class Networker {
                                         method: method,
                                         parameters: params,
                                         encoding: encoding ?? URLEncoding.default,
-                                        headers: headers).responseJSON { (dataResponse) in
+                                        headers: headers).response { (dataResponse) in
                                             handleAlamofireJSONResponse(dataResponse: dataResponse, onSuccess: { (dictionary, statusCode) in
                                                 onSuccess(dictionary, statusCode)
                                             }, onError: onError)
@@ -168,7 +185,7 @@ class Networker {
     ///   - callback: Closure with Mappable result
     /// - Returns: NetworkerRequest you can use for example to cancel request
     @discardableResult
-    public static func requestMappable<T: Mappable>(url: String,
+    public static func requestMappable<T>(url: String,
                                         method: HTTPMethod,
                                         params: Parameters? = nil,
                                         encoding: ParameterEncoding? = nil,

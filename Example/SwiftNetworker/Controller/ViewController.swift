@@ -19,13 +19,6 @@ class ViewController: UIViewController {
         getUserRepositories()
     }
     
-    private func printError(error: Error, functionName: String) {
-        if let statusCode = error.networkerError?.statusCode {
-            print("status code: \(statusCode)")
-        }
-        print("failure \(functionName): \(error.localizedDescription)")
-    }
-    
     private func getUserInfo() {
         GitHubRouter
             .userDetails(nickname: userNickname)
@@ -53,5 +46,12 @@ class ViewController: UIViewController {
                     self.printError(error: error, functionName: "getUserRepositories")
                 }
         }
+    }
+    
+    private func printError(error: Error, functionName: String) {
+        if let statusCode = error.networkerError?.statusCode {
+            print("status code: \(statusCode)")
+        }
+        print("failure \(functionName): \(error.localizedDescription)")
     }
 }

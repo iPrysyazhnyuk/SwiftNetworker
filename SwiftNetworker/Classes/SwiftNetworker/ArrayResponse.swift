@@ -8,14 +8,14 @@
 
 import ObjectMapper
 
-public struct ArrayResponse<T: Mappable>: Mappable {
+open class ArrayResponse<T: Mappable>: Mappable {
     public var array = [T]()
     
-    public init(map: Map) {
+    public required init(map: Map) {
         mapping(map: map)
     }
     
-    public mutating func mapping(map: Map) {
+    public func mapping(map: Map) {
         array   <- map[Networker.JSONKey.array]
     }
 }

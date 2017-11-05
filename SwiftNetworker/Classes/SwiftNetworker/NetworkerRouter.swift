@@ -46,7 +46,7 @@ public extension NetworkerRouter {
     ///   - callback: Closure with Mappable result
     /// - Returns: NetworkerRequest you can use for example to cancel request
     @discardableResult
-    public func requestMappable<T: Mappable>(callback: @escaping (NetworkerMappableResult<T>) -> ()) -> NetworkerRequest? {
+    public func requestMappable<T>(callback: @escaping (NetworkerMappableResult<T>) -> ()) -> NetworkerRequest? {
         return Networker.requestMappable(url: url,
                                   method: method,
                                   params: params,
