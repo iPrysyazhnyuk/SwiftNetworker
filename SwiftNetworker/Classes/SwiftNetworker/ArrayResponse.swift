@@ -15,7 +15,7 @@ open class ArrayResponse<T: Mappable>: Mappable {
         mapping(map: map)
     }
     
-    public func mapping(map: Map) {
+    open func mapping(map: Map) {
         array   <- map[Networker.JSONKey.array]
     }
 }
