@@ -13,10 +13,4 @@ public struct NetworkerJSONResponse {
     
     /// JSON dictionary
     public let json: JSON
-    
-    init(statusCode: Int,
-         json: JSON) {
-        self.statusCode = statusCode
-        self.json = json
-    }
 }
