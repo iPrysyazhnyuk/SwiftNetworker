@@ -16,9 +16,6 @@ public struct NetworkerMappableResponse<T: Mappable> {
     /// Parsed Mappable object
     public let object: T
     
-    init(statusCode: Int,
-         object: T) {
-        self.statusCode = statusCode
-        self.object = object
-    }
+    /// JSON dictionary
+    public let json: JSON
 }

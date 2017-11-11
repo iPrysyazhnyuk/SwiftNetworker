@@ -197,7 +197,9 @@ public class Networker {
                 let object = T(JSON: json)
                 DispatchQueue.main.async {
                     if let object = object {
-                        let networkerResponse = NetworkerMappableResponse(statusCode: statusCode, object: object)
+                        let networkerResponse = NetworkerMappableResponse(statusCode: statusCode,
+                                                                          object: object,
+                                                                          json: json)
                         callback(NetworkerMappableResult.success(networkerResponse))
                     }
                     else {
