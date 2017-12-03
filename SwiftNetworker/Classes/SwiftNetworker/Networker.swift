@@ -31,7 +31,7 @@ public class Networker {
         }
         
         var responseJSON: JSON = [:]
-        var possibleErrorMessage = NetworkerError.unknownError
+        var possibleErrorMessage = NetworkerError.unknownErrorMessage
         
         if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
             if let object = json as? JSON {
