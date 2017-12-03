@@ -20,7 +20,7 @@ public struct NetworkerError: Error, LocalizedError {
     
     let message: String?
     
-    init(info: JSON? = nil,
+    public init(info: JSON? = nil,
          message: String = NetworkerError.unknownError,
          statusCode: Int? = nil) {
         self.info = info
