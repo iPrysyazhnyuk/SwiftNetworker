@@ -166,7 +166,7 @@ GitHubRouter
     .request()
 ```
 
-Upload photo? Easy, just create `NetworkerFile` and pass it as param to Router:
+Upload photo or other Data? Easy, just create `NetworkerFile` and pass it as param to Router:
 ```swift
 let photoFile = NetworkerFile(image: UIImage(),
                               key: "photo",
