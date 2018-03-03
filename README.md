@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/SwiftNetworker.svg?style=flat)](http://cocoapods.org/pods/SwiftNetworker)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftNetworker.svg?style=flat)](http://cocoapods.org/pods/SwiftNetworker)
 
-SwiftNetworker simplifies and make HTTP requests code structured using Router abstraction.
+SwiftNetworker simplifies and makes HTTP requests code structured using Router abstraction.
 It means you write REST API requests with enum cases for better readability and code reuse.
 Received HTTP response automatically parsed into Swift objects using ObjectMapper library.
 
@@ -123,11 +123,11 @@ GitHubRouter
         }
 }
 ```
-Error object can be easy converted (by Error extension) to NetworkerError with additional information: statusCode, received JSON response dictionary.
+Error object can be easy converted (by Error extension) to `NetworkerError` with additional information: statusCode, received JSON response dictionary.
 
-If you want to get response HTTP status code, JSON dictionary along with parsed Object you can use another method with NetworkerMappableResult callback which can be success or failure.
-- success case gives NetworkerMappableResponse structure with: statusCode, parsed object itself, received JSON response dictionary.
-- failure case contains Swift Error
+If you want to get response HTTP status code, JSON dictionary along with parsed Object you can use another method with `NetworkerMappableResult` callback which can be success or failure.
+- success case gives `NetworkerMappableResponse` structure with: statusCode, parsed object itself, received JSON response dictionary.
+- failure case contains Swift Error object
 ```swift
 GitHubRouter
     .getUserDetails(nickname: "git")
@@ -164,7 +164,7 @@ GitHubRouter
     .request()
 ```
 
-Upload photo? Easy, just create NetworkerFile and pass it as param to Router.
+Upload photo? Easy, just create `NetworkerFile` and pass it as param to Router:
 ```swift
 let photoFile = NetworkerFile(image: UIImage(),
                               key: "photo",
@@ -178,8 +178,8 @@ Router
 Using of Router is recommended but not required, the same for automatic JSON parsing - it's optional, you can still receive JSON and parse manually:
 ```swift
 Networker.requestJSON(url: "https://api.github.com/users/git",
-                              method: .get,
-                              onSuccess: { (json, statusCode) in
+                      method: .get,
+                      onSuccess: { (json, statusCode) in
     print("success getUserInfoWithoutRouterAndJSONParsing, json: \(json)")
 }) { (error) in
     print(error.localizedDescription)
