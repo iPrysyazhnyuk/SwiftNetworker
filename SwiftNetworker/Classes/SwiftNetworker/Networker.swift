@@ -232,6 +232,33 @@ public class Networker {
             callback(NetworkerMappableResult.failure(error))
         }
     }
+    
+    /// Make request with simplified Mappable response
+    ///
+    /// - Parameters:
+    ///   - url: Full url
+    ///   - method: HTTP method
+    ///   - params: Parameters
+    ///   - encoding: Parameters encoding, if not specified use URLEncoding
+    ///   - headers: HTTP headers
+    ///   - onSuccess: Closure called when success response received with Mappable object
+    ///   - onError: Closure called when error response received
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
+    public static func requestMappable<T: Mappable>(url: String,
+                                          method: HTTPMethod,
+                                          params: Parameters? = nil,
+                                          encoding: ParameterEncoding? = nil,
+                                          headers: [String: String]? = nil,
+                                          onSuccess: ((T) -> ())?,
+                                          onError: ((Error) -> ())?) -> NetworkerRequest? {
+        return requestMappable(url: url, method: method, params: params, encoding: encoding, headers: headers) { (result: NetworkerMappableResult<T>) in
+            switch result {
+            case .success(let response): onSuccess?(response.object)
+            case .failure(let error): onError?(error)
+            }
+        }
+    }
 }
 
 public protocol NetworkerRequest {
