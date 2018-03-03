@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     private func getUserInfo() {
         GitHubRouter
-            .userDetails(nickname: userNickname)
+            .getUserDetails(nickname: userNickname)
             .requestMappable { (result: NetworkerMappableResult<User>) in
                 switch result {
                 case .success(let response):
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     
     private func getUserRepositories() {
         GitHubRouter
-            .userRepositories(ownerNickname: userNickname)
+            .getUserRepositories(ownerNickname: userNickname)
             .requestMappable { (result: NetworkerMappableResult<ArrayResponse<Repository>>) in
                 switch result {
                 case .success(let response):
