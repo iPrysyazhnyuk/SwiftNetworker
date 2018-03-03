@@ -18,6 +18,7 @@ class ViewController: UIViewController {
         getUserInfoSimplified()
         getUserInfo()
         getUserRepositoriesSimplified()
+        updateUserInfoWithoutResponseHandling()
     }
     
     /// Get only User object without status code, JSON dictionary for success response
@@ -60,5 +61,12 @@ class ViewController: UIViewController {
             }, onError: { (error) in
                 print(error.localizedDescription)
             })
+    }
+    
+    private func updateUserInfoWithoutResponseHandling() {
+        GitHubRouter
+            .updateUser(name: "new name",
+                        email: "new_email@mail.com")
+            .request()
     }
 }

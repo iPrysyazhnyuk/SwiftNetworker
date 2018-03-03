@@ -161,6 +161,25 @@ GitHubRouter
     })
 ```
 
+Update user info without response handling:
+```swift
+GitHubRouter
+    .updateUser(name: "new name",
+                email: "new_email@mail.com")
+    .request()
+```
+
+Upload photo? Easy, just create NetworkerFile and pass it as param to Router.
+```swift
+let photoFile = NetworkerFile(image: UIImage(),
+                              key: "photo",
+                              name: "photo.png",
+                              imageFormat: .png)
+Router
+    .uploadPhoto(photo: photoFile)
+    .request()
+```
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
