@@ -8,9 +8,11 @@
 
 import UIKit
 import SwiftNetworker
+import RxSwift
 
 class ViewController: UIViewController {
 
+    private let disposeBag = DisposeBag()
     private let userNickname = "git"
     
     override func viewDidLoad() {
@@ -18,6 +20,7 @@ class ViewController: UIViewController {
         getUserInfoSimplified()
         getUserInfo()
         getUserInfoWithoutRouterAndJSONParsing()
+        getUserInfoRx()
         getUserRepositoriesSimplified()
         updateUserInfoWithoutResponseHandling()
     }
@@ -45,8 +48,7 @@ class ViewController: UIViewController {
             .requestMappable { (result: NetworkerMappableResult<User>) in
                 switch result {
                 case .success(let response):
-                    print("status code: \(response.statusCode)")
-                    print("success getUserInfo, user name: \(response.object.name)")
+                    print("success getUserInfo, user name: \(response.object.name), status code: \(response.statusCode)")
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -61,6 +63,23 @@ class ViewController: UIViewController {
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    private func getUserInfoRx() {
+        GitHubRouter
+            .getUserDetails(nickname: "git")
+            .requestMappableRx()
+            .subscribe(onNext: { (result: NetworkerMappableResult<User>) in
+                switch result {
+                case .success(let response):
+                    print("success getUserInfoRx, user name: \(response.object.name), status code: \(response.statusCode)")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }, onError: { (error) in
+                print(error.localizedDescription)
+            })
+            .addDisposableTo(disposeBag)
     }
     
     private func getUserRepositoriesSimplified() {
