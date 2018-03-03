@@ -18,7 +18,7 @@ public struct NetworkerError: Error, LocalizedError {
     /// HTTP status code
     public let statusCode: Int?
     
-    let message: String?
+    public var message: String?
     
     public init(info: JSON? = nil,
          message: String = NetworkerError.unknownErrorMessage,

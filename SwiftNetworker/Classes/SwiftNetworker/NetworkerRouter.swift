@@ -54,4 +54,16 @@ public extension NetworkerRouter {
                                   headers: headers,
                                   callback: callback)
     }
+    
+    /// Make request without response handling
+    ///
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
+    public func request() -> NetworkerRequest? {
+        return Networker.request(url: url,
+                                 method: method,
+                                 params: params,
+                                 encoding: encoding,
+                                 headers: headers)
+    }
 }
