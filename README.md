@@ -182,7 +182,7 @@ Using of Router is recommended but not required, the same for automatic JSON par
 Networker.requestJSON(url: "https://api.github.com/users/git",
                       method: .get,
                       onSuccess: { (json, statusCode) in
-    print("success getUserInfoWithoutRouterAndJSONParsing, json: \(json)")
+    print("success, json: \(json)")
 }) { (error) in
     print(error.localizedDescription)
 }
