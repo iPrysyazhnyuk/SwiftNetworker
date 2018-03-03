@@ -17,6 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         getUserInfoSimplified()
         getUserInfo()
+        getUserInfoWithoutRouterAndJSONParsing()
         getUserRepositoriesSimplified()
         updateUserInfoWithoutResponseHandling()
     }
@@ -49,6 +50,16 @@ class ViewController: UIViewController {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
+        }
+    }
+    
+    private func getUserInfoWithoutRouterAndJSONParsing() {
+        Networker.requestJSON(url: "https://api.github.com/users/git",
+                              method: .get,
+                              onSuccess: { (json, statusCode) in
+            print("success getUserInfoWithoutRouterAndJSONParsing, json: \(json)")
+        }) { (error) in
+            print(error.localizedDescription)
         }
     }
     

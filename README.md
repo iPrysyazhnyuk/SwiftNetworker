@@ -54,15 +54,11 @@ struct Repository: Mappable {
     }
 }
 ```
-
 Yes, `owner` variable will be parsed into User object without any extra code.
 
 Ok, it's time to present to you Router that describe GitHub API requests we want to use:
 
 ```swift
-import Alamofire
-import SwiftNetworker
-
 enum GitHubRouter: NetworkerRouter {
 
     case getUserDetails(nickname: String)
@@ -108,7 +104,6 @@ enum GitHubRouter: NetworkerRouter {
     }
 }
 ```
-
 Mandatory for Router are: base API url, endpoints, HTTP methods.
 Optional are: HTTP headers, encoding type.
 
@@ -180,7 +175,16 @@ Router
     .request()
 ```
 
-Using of Router is recommended but not required
+Using of Router is recommended but not required, the same for automatic JSON parsing - it's optional, you can still receive JSON and parse manually:
+```swift
+Networker.requestJSON(url: "https://api.github.com/users/git",
+                              method: .get,
+                              onSuccess: { (json, statusCode) in
+    print("success getUserInfoWithoutRouterAndJSONParsing, json: \(json)")
+}) { (error) in
+    print(error.localizedDescription)
+}
+```
 
 ## Example
 

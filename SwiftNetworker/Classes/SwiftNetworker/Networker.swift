@@ -123,12 +123,12 @@ public class Networker {
     /// - Returns: NetworkerRequest you can use for example to cancel request
     @discardableResult
     public static func requestJSON(url: String,
-                                    method: HTTPMethod,
-                                    params: Parameters? = nil,
-                                    encoding: ParameterEncoding? = nil,
-                                    headers: [String: String]? = nil,
-                                    onSuccess: @escaping (_ json: JSON, _ statusCode: Int) -> (),
-                                    onError: @escaping (Error) -> ()) -> NetworkerRequest? {
+                                   method: HTTPMethod,
+                                   params: Parameters? = nil,
+                                   encoding: ParameterEncoding? = nil,
+                                   headers: [String: String]? = nil,
+                                   onSuccess: @escaping (_ json: JSON, _ statusCode: Int) -> (),
+                                   onError: @escaping (Error) -> ()) -> NetworkerRequest? {
         var request: NetworkerRequest?
         // Check parameters and make request with JSON Dictionary response. Can be multipart if parameters contain NetworkerFile
         if let params = params,
