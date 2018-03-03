@@ -72,7 +72,8 @@ public class Networker {
             multipartFormData: { multipartFormData in
                 
                 func anyToData(value: Any) -> Data {
-                    return String(describing: value).data(using: String.Encoding.utf8)!
+                    return String(describing: value)
+                        .data(using: String.Encoding.utf8)!
                 }
                 
                 for (key, value) in params {
@@ -83,10 +84,12 @@ public class Networker {
                                                  mimeType: networkerFile.fileName)
                     } else if let array = value as? [Any] {
                         for element in array {
-                            multipartFormData.append(anyToData(value: element), withName: key)
+                            multipartFormData.append(anyToData(value: element),
+                                                     withName: key)
                         }
                     } else {
-                        multipartFormData.append(anyToData(value: value), withName: key)
+                        multipartFormData.append(anyToData(value: value),
+                                                 withName: key)
                     }
                 }
         },
@@ -142,9 +145,10 @@ public class Networker {
                                         parameters: params,
                                         encoding: encoding ?? URLEncoding.default,
                                         headers: headers).response { (dataResponse) in
-                                            handleAlamofireJSONResponse(dataResponse: dataResponse, onSuccess: { (dictionary, statusCode) in
-                                                onSuccess(dictionary, statusCode)
-                                            }, onError: onError)
+                handleAlamofireJSONResponse(dataResponse: dataResponse,
+                                            onSuccess: { (dictionary, statusCode) in
+                    onSuccess(dictionary, statusCode)
+                }, onError: onError)
             }
         }
         return request
@@ -167,8 +171,14 @@ public class Networker {
                                     encoding: ParameterEncoding? = nil,
                                     headers: [String: String]? = nil,
                                     callback: @escaping (NetworkerJSONResult) -> ()) -> NetworkerRequest? {
-        return requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { (json, statusCode) in
-            callback(NetworkerJSONResult.success(NetworkerJSONResponse(statusCode: statusCode, json: json)))
+        return requestJSON(url: url,
+                           method: method,
+                           params: params,
+                           encoding: encoding,
+                           headers: headers,
+                           onSuccess: { (json, statusCode) in
+            callback(NetworkerJSONResult.success(NetworkerJSONResponse(statusCode: statusCode,
+                                                                       json: json)))
         }) { (error) in
             callback(NetworkerJSONResult.failure(error))
         }
@@ -189,7 +199,12 @@ public class Networker {
                                params: Parameters? = nil,
                                encoding: ParameterEncoding? = nil,
                                headers: [String: String]? = nil) -> NetworkerRequest? {
-        return requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { _,_ in })
+        return requestJSON(url: url,
+                           method: method,
+                           params: params,
+                           encoding: encoding,
+                           headers: headers,
+                           onSuccess: { _,_ in })
         { (error) in
             print(error)
         }
@@ -212,7 +227,12 @@ public class Networker {
                                         encoding: ParameterEncoding? = nil,
                                         headers: [String: String]? = nil,
                                         callback: @escaping (NetworkerMappableResult<T>) -> ()) -> NetworkerRequest? {
-        return requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { (json, statusCode) in
+        return requestJSON(url: url,
+                           method: method,
+                           params: params,
+                           encoding: encoding,
+                           headers: headers,
+                           onSuccess: { (json, statusCode) in
             // Run async because JSON parsing can be slow
             DispatchQueue.global().async {
                 let object = T(JSON: json)
@@ -252,7 +272,11 @@ public class Networker {
                                           headers: [String: String]? = nil,
                                           onSuccess: ((T) -> ())?,
                                           onError: ((Error) -> ())?) -> NetworkerRequest? {
-        return requestMappable(url: url, method: method, params: params, encoding: encoding, headers: headers) { (result: NetworkerMappableResult<T>) in
+        return requestMappable(url: url,
+                               method: method,
+                               params: params,
+                               encoding: encoding,
+                               headers: headers) { (result: NetworkerMappableResult<T>) in
             switch result {
             case .success(let response): onSuccess?(response.object)
             case .failure(let error): onError?(error)
