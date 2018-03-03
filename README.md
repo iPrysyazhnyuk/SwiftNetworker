@@ -123,7 +123,7 @@ GitHubRouter
         }
 }
 ```
-Error object can be easy converted (by Error extension) to `NetworkerError` with additional information: statusCode, received JSON response dictionary.
+Error object can be easy converted (by Error extension) to `NetworkerError` with additional information: statusCode, received JSON response dictionary. Error response means any request issues (e.g. missing network connection) or response with Client(4xx) or Server(5xx) error status codes.
 
 If you want to get response HTTP status code, JSON dictionary along with parsed Object you can use another method with `NetworkerMappableResult` callback which can be success or failure.
 - success case gives `NetworkerMappableResponse` structure with: statusCode, parsed object itself, received JSON response dictionary.
@@ -191,6 +191,9 @@ Networker.requestJSON(url: "https://api.github.com/users/git",
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
+
+* iOS 8.0+
+* Swift 3.2+
 
 ## Installation
 
