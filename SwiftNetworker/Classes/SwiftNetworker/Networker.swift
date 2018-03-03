@@ -174,6 +174,27 @@ public class Networker {
         }
     }
     
+    /// Make request without response handling
+    ///
+    /// - Parameters:
+    ///   - url: Full url
+    ///   - method: HTTP method
+    ///   - params: Parameters
+    ///   - encoding: Parameters encoding, if not specified use URLEncoding
+    ///   - headers: HTTP headers
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
+    public static func request(url: String,
+                               method: HTTPMethod,
+                               params: Parameters? = nil,
+                               encoding: ParameterEncoding? = nil,
+                               headers: [String: String]? = nil) -> NetworkerRequest? {
+        return requestJSON(url: url, method: method, params: params, encoding: encoding, headers: headers, onSuccess: { _,_ in })
+        { (error) in
+            print(error)
+        }
+    }
+    
     /// Make request with Mappable response
     ///
     /// - Parameters:
