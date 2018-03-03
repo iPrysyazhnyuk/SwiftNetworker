@@ -36,6 +36,13 @@ public struct NetworkerFile {
         }
     }
     
+    public init(data: Data, key: String, fileName: String, mimeType: String) {
+        self.data = data
+        self.key = key
+        self.fileName = fileName
+        self.mimeType = mimeType
+    }
+    
     public init(image: UIImage, key: String, name: String, imageFormat: ImageFormat) {
         switch imageFormat {
         case .jpg(let compressionQuality):
