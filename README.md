@@ -5,9 +5,9 @@
 [![License](https://img.shields.io/cocoapods/l/SwiftNetworker.svg?style=flat)](http://cocoapods.org/pods/SwiftNetworker)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftNetworker.svg?style=flat)](http://cocoapods.org/pods/SwiftNetworker)
 
-SwiftNetworker simplifies and make HTTP requests structured using Router abstraction.
-It means you write REST API requests with special enum cases for better readability and code reuse.
-Received response can be automatically parsed into Swift objects using ObjectMapper library.
+SwiftNetworker simplifies and make HTTP requests code structured using Router abstraction.
+It means you write REST API requests with enum cases for better readability and code reuse.
+Received HTTP response automatically parsed into Swift objects using ObjectMapper library.
 
 ## Usage
 
