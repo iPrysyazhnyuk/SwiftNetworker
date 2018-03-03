@@ -56,8 +56,10 @@ struct Repository: Mappable {
 ```
 Yes, `owner` variable will be parsed into User object without any extra code.
 
-Ok, it's time to present to you Router that describe GitHub API requests we want to use:
-
+Ok, it's time to present to you Router that describes GitHub API calls we want to use to:
+- get user details
+- get repositories owned by user
+- update user info
 ```swift
 enum GitHubRouter: NetworkerRouter {
 
