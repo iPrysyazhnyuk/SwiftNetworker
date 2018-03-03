@@ -47,6 +47,9 @@ enum GitHubRouter: NetworkerRouter {
     }
     
     var headers: [String : String]? {
-        return ["Authorization": "token OAUTH-TOKEN"]
+        switch self {
+        case .updateUser: return ["Authorization": "token OAUTH-TOKEN"]
+        default: return nil
+        }
     }
 }

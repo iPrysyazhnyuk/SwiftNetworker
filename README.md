@@ -60,14 +60,6 @@ Yes, `owner` variable will be parsed into User object without any extra code.
 Ok, it's time to present to you Router that describe GitHub API requests we want to use:
 
 ```swift
-//
-//  GitHubRouter.swift
-//  SwiftNetworker
-//
-//  Created by Igor on 10/15/17.
-//  Copyright © 2017 CocoaPods. All rights reserved.
-//
-
 import Alamofire
 import SwiftNetworker
 
@@ -109,7 +101,10 @@ enum GitHubRouter: NetworkerRouter {
     }
 
     var headers: [String : String]? {
-        return ["Authorization": "token OAUTH-TOKEN"]
+        switch self {
+        case .updateUser: return ["Authorization": "token OAUTH-TOKEN"]
+        default: return nil
+        }
     }
 }
 ```
@@ -117,11 +112,27 @@ enum GitHubRouter: NetworkerRouter {
 Mandatory for Router are: base API url, endpoints, HTTP methods.
 Optional are: HTTP headers, encoding type.
 
-If you want to use SwiftNetworker Mappable requests (e.g. response automatically parsed into Swift objects) in response to API call you receive NetworkerMappableResult which can be success or failure.
-- success case gives NetworkerMappableResponse structure with: statusCode, parsed object itself, received JSON response dictionary.
-- failure case contains Swift Error object that can be easy converted (by Error extension) to NetworkerError with additional information: statusCode, received JSON response dictionary.
-
 Now lets use our GitHubRouter to get user details:
+```swift
+GitHubRouter
+    .getUserDetails(nickname: "git")
+    .requestMappable(onSuccess: { (user: User) in
+        print("user name: \(user.name)")
+    }) { (error) in
+        let networkerError = error.networkerError
+        if let statusCode = networkerError?.statusCode {
+            print("failure status code: \(statusCode)")
+        }
+        if let json = networkerError?.info {
+            print("failure json: \(json)")
+        }
+}
+```
+Error object can be easy converted (by Error extension) to NetworkerError with additional information: statusCode, received JSON response dictionary.
+
+If you want to get response HTTP status code, JSON dictionary along with parsed Object you can use another method with NetworkerMappableResult callback which can be success or failure.
+- success case gives NetworkerMappableResponse structure with: statusCode, parsed object itself, received JSON response dictionary.
+- failure case contains Swift Error
 ```swift
 GitHubRouter
     .getUserDetails(nickname: "git")
@@ -129,7 +140,7 @@ GitHubRouter
         switch result {
         case .success(let response):
             print("status code: \(response.statusCode)")
-            print("success getUserInfo, user name: \(response.object.name)")
+            print("user name: \(response.object.name)")
         case .failure(let error):
             if let statusCode = error.networkerError?.statusCode {
                 print("failure status code: \(statusCode)")
@@ -142,18 +153,12 @@ Get array of user's repositories:
 ```swift
 GitHubRouter
     .getUserRepositories(ownerNickname: "git")
-    .requestMappable { (result: NetworkerMappableResult<ArrayResponse<Repository>>) in
-        switch result {
-        case .success(let response):
-            print("status code: \(response.statusCode)")
-            let reposNames = response.object.array.map { $0.name }
-            print("success getUserRepositories, repositories names: \(reposNames)")
-        case .failure(let error):
-            if let statusCode = error.networkerError?.statusCode {
-                print("failure status code: \(statusCode)")
-            }
-        }
-}
+    .requestMappable(onSuccess: { (repositories: ArrayResponse<Repository>) in
+        let reposNames = repositories.array.map { $0.name }
+        print("repositories names: \(reposNames)")
+    }, onError: { (error) in
+        print(error.localizedDescription)
+    })
 ```
 
 ## Example
