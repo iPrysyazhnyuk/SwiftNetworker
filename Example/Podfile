@@ -1,12 +1,12 @@
 use_frameworks!
 
 target 'SwiftNetworker_Example' do
-  pod 'SwiftNetworker/RxSwift', :path => '../'
-
-  target 'SwiftNetworker_Tests' do
-    inherit! :search_paths
-
-    pod 'Quick', '~> 1.2.0'
-  pod 'Nimble', '~> 7.0.2'
-  end
+    pod 'SwiftNetworker/RxSwift', '~> 1.0'
+    
+    target 'SwiftNetworker_Tests' do
+        inherit! :search_paths
+        
+        pod 'Quick', '~> 1.2.0'
+        pod 'Nimble', '~> 7.0.2'
+    end
 end
