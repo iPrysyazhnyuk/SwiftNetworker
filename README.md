@@ -11,8 +11,10 @@ Received HTTP response automatically parsed into Swift objects using [ObjectMapp
 
 ## Usage
 
+### Models
+
 Assume you want to use GitHub REST API for your project to work with Users and Repositories.
-Unexpectedly, you need User model :)
+Unexpectedly, you need a User model :)
 ```swift
 import ObjectMapper
 
@@ -55,6 +57,8 @@ struct Repository: Mappable {
 }
 ```
 Yes, `owner` variable will be parsed into User object without any extra code.
+
+### Router
 
 Ok, it's time to present to you Router that describes GitHub API calls we want to use to:
 - get user details
@@ -109,7 +113,9 @@ enum GitHubRouter: NetworkerRouter {
 Mandatory for Router are: base API url, endpoints, HTTP methods.
 Optional are: HTTP headers, encoding type.
 
-Now lets use our GitHubRouter to get user details:
+### Make HTTP requests
+
+Now let's use our GitHubRouter to get user details:
 ```swift
 GitHubRouter
     .getUserDetails(nickname: "git")
@@ -125,7 +131,12 @@ GitHubRouter
         }
 }
 ```
-Error object can be easy converted (by Error extension) to `NetworkerError` with additional information: statusCode, received JSON response dictionary. Error response means any request issues (e.g. missing network connection) or response with Client(4xx) or Server(5xx) error status codes.
+
+### Error handling
+
+Swift Error object can be easy converted (by Error extension) to `NetworkerError` with additional information: statusCode, received JSON response dictionary. Error response means any request issues (e.g. missing network connection) or response with Client(4xx) or Server(5xx) error status codes.
+
+### Different options of HTTP request, response
 
 If you want to get response HTTP status code, JSON dictionary along with parsed Object you can use another method with `NetworkerMappableResult` callback which can be success or failure.
 - success case gives `NetworkerMappableResponse` structure with: statusCode, parsed object itself, received JSON response dictionary.
@@ -187,6 +198,8 @@ Networker.requestJSON(url: "https://api.github.com/users/git",
     print(error.localizedDescription)
 }
 ```
+
+### RxSwift
 
 There is also RxSwift extension:
 ```swift
