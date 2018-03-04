@@ -60,7 +60,7 @@ Yes, `owner` variable will be parsed into User object without any extra code.
 
 ### Router
 
-Ok, it's time to present to you Router that describes GitHub API calls we want to use to:
+Ok, it's time to present to you Router. You get it by implementing `NetworkerRouter` protocol. Here is example of router that describes GitHub API calls we want to use to:
 - get user details
 - get repositories owned by user
 - update user info
