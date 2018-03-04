@@ -7,7 +7,7 @@
 
 SwiftNetworker simplifies and makes HTTP requests code structured using Router abstraction.
 It means you write REST API requests with enum cases for better readability and code reuse.
-Received HTTP response automatically parsed into Swift objects using ObjectMapper library.
+Received HTTP response automatically parsed into Swift objects using [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) library.
 
 ## Usage
 
@@ -188,6 +188,22 @@ Networker.requestJSON(url: "https://api.github.com/users/git",
 }
 ```
 
+There is also RxSwift extension:
+```swift
+GitHubRouter
+    .getUserDetails(nickname: "git")
+    .requestMappableRx()
+    .subscribe(onNext: { (result: NetworkerMappableResult<User>) in
+        switch result {
+        case .success(let response):
+            print("success, user name: \(response.object.name), status code: \(response.statusCode)")
+        case .failure(let error):
+            print(error.localizedDescription)
+        }
+    })
+    .addDisposableTo(disposeBag)
+```
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -204,6 +220,11 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'SwiftNetworker'
+```
+
+If you use RxSwift:
+```ruby
+pod 'SwiftNetworker/RxSwift'
 ```
 
 ## Author
