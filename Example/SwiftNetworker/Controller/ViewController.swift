@@ -76,8 +76,6 @@ class ViewController: UIViewController {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
-            }, onError: { (error) in
-                print(error.localizedDescription)
             })
             .addDisposableTo(disposeBag)
     }
