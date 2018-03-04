@@ -9,12 +9,14 @@
 import ObjectMapper
 
 struct User: Mappable {
-    var id = 0
+    
+    var id: Int?
     var name = ""
-    var avatarUrl = ""
+    var avatarUrl: String?
     
-    init(map: Map) {}
+    init(map: Map) { /* Object Mapper requires constructor */ }
     
+    // Parsing magic happens here, "id", "name", "avatar_url" are JSON response attribute names
     mutating func mapping(map: Map) {
         id          <- map["id"]
         name        <- map["name"]

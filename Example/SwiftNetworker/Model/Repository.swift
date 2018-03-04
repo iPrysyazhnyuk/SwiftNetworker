@@ -9,11 +9,12 @@
 import ObjectMapper
 
 struct Repository: Mappable {
+    
     var id = 0
     var name = ""
     var owner: User?
     
-    init(map: Map) {}
+    init(map: Map) { /* Object Mapper requires constructor */ }
     
     mutating func mapping(map: Map) {
         id          <- map["id"]

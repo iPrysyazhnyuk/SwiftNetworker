@@ -25,6 +25,25 @@ public extension NetworkerRouter {
     var encoding: ParameterEncoding? { return nil }
     var headers: [String: String]? { return nil }
     
+    /// Make request with JSON Dictionary response.
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Closure for success response
+    ///   - onError: Closure for error response
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
+    public func requestJSON(
+        onSuccess: @escaping (_ json: JSON, _ statusCode: Int) -> (),
+        onError: @escaping (Error) -> ()) -> NetworkerRequest? {
+        return Networker.requestJSON(url: url,
+                                     method: method,
+                                     params: params,
+                                     encoding: encoding,
+                                     headers: headers,
+                                     onSuccess: onSuccess,
+                                     onError: onError)
+    }
+    
     /// Make request with JSON Dictionary response
     ///
     /// - Parameters:
@@ -40,6 +59,8 @@ public extension NetworkerRouter {
                               callback: callback)
     }
     
+    
+    
     /// Make request with Mappable response
     ///
     /// - Parameters:
@@ -54,16 +75,35 @@ public extension NetworkerRouter {
                                   headers: headers,
                                   callback: callback)
     }
+ 
+    /// Make request with simplified Mappable response
+    ///
+    /// - Parameters:
+    ///   - onSuccess: Closure called when success response received with Mappable object
+    ///   - onError: Closure called when error response received
+    /// - Returns: NetworkerRequest you can use for example to cancel request
+    @discardableResult
+    public func requestMappable<T: Mappable>(onSuccess: @escaping (T) -> (),
+                                             onError: ((Error) -> ())? = nil) -> NetworkerRequest? {
+        return Networker.requestMappable(url: url,
+                                         method: method,
+                                         params: params,
+                                         encoding: encoding,
+                                         headers: headers,
+                                         onSuccess: onSuccess,
+                                         onError: onError)
+    }
     
     /// Make request without response handling
     ///
     /// - Returns: NetworkerRequest you can use for example to cancel request
     @discardableResult
-    public func request() -> NetworkerRequest? {
+    public func request(onError: ((Error) -> ())? = nil) -> NetworkerRequest? {
         return Networker.request(url: url,
                                  method: method,
                                  params: params,
                                  encoding: encoding,
-                                 headers: headers)
+                                 headers: headers,
+                                 onError: onError)
     }
 }
