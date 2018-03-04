@@ -280,7 +280,7 @@ public class Networker {
                            encoding: encoding,
                            headers: headers,
                            onSuccess: { _ in },
-                           onError: { _ in })
+                           onError: { error in onError?(error) })
     }
 }
 
