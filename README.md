@@ -232,12 +232,12 @@ SwiftNetworker is available through [CocoaPods](http://cocoapods.org). To instal
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'SwiftNetworker'
+pod 'SwiftNetworker', '~> 1.0'
 ```
 
 If you use RxSwift:
 ```ruby
-pod 'SwiftNetworker/RxSwift'
+pod 'SwiftNetworker/RxSwift', '~> 1.0'
 ```
 
 ## Author
